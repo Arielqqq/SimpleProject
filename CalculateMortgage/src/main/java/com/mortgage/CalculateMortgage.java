@@ -1,6 +1,5 @@
 package com.mortgage;
 
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.text.NumberFormat;
 import java.util.Scanner;
 
@@ -13,13 +12,20 @@ public class CalculateMortgage {
         float annualInterest = (float) readNumber("Annual Interest Rate:", 1, 30);
         byte years = (byte) readNumber("Period (Years):", 1, 30);
 
+        printMortgage(principal, annualInterest, years);
+        printPaymentSchedule(principal, annualInterest, years);
+    }
+
+    private static void printMortgage(int principal, float annualInterest, byte years) {
         double mortgage = calculateMortgage(principal, annualInterest, years);
         String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
         System.out.println();
         System.out.println("Mortgage");
         System.out.println("--------");
         System.out.println("Monthly Payments: " + mortgageFormatted);
+    }
 
+    private static void printPaymentSchedule(int principal, float annualInterest, byte years) {
         System.out.println();
         System.out.println("PAYMENT SCHEDULE");
         System.out.println("----------------");
@@ -27,15 +33,9 @@ public class CalculateMortgage {
             double balance = calculateBalance(principal, annualInterest, years, month);
             System.out.println(NumberFormat.getCurrencyInstance().format(balance));
         }
-
-        //printMortgage(principal, annualInterest, years);
     }
 
-    private static void printMortgage(int principal, float annualInterest, byte years) {
-        double mortgage = calculateMortgage(principal, annualInterest, years);
-        String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
-        System.out.print("Mortgage:" + mortgageFormatted);
-    }
+
 
     public static double readNumber(String prompt, double min, double max) {
         Scanner scanner = new Scanner(System.in);
